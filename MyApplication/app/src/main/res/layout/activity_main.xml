@@ -32,7 +32,7 @@
         android:layout_alignStart="@+id/demoProduct"
         android:layout_alignRight="@+id/demoProduct"
         android:layout_alignEnd="@+id/demoProduct"
-        android:onClick="launchBarcodeScaner"/>
+        android:onClick="launchBarcodeScanner"/>
     />
 
     <Button
