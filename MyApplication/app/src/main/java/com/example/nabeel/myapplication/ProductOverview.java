@@ -1,14 +1,18 @@
 package com.example.nabeel.myapplication;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ProductOverview extends AppCompatActivity {
     final String demoText = "This product is a demo product created by Company X. It was released in 2016.";
@@ -72,6 +76,37 @@ public class ProductOverview extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_bar_share:
+                shareButtonClick();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    private void shareButtonClick() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Share Product")
+                .setView(this.getLayoutInflater().inflate(R.layout.product_share_dialog_layout, null))
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Share", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "Shared to social media", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        builder.show();
+    }
+
     public void expandEnvironment (View view) {
         humanRightsSources.setVisibility(View.GONE);
         animalWelfareSources.setVisibility(View.GONE);
@@ -89,5 +124,4 @@ public class ProductOverview extends AppCompatActivity {
         animalWelfareSources.setVisibility(View.VISIBLE);
         environmentSources.setVisibility(View.GONE);
     }
-
 }

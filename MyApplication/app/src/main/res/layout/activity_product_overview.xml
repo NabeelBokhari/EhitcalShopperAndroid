@@ -46,9 +46,10 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#cecece"
             android:id="@+id/environmentBanner"
-            android:onClick="expandEnvironment">
+            android:onClick="expandEnvironment"
+            android:clickable="false"
+            android:background="#cecece">
 
             <TextView
                 android:layout_width="match_parent"
@@ -66,7 +67,7 @@
                 android:layout_height="40dp"
                 android:id="@+id/environmentRating"
                 android:layout_margin="5dp"
-                android:background="#98ce69" />
+                android:background="@drawable/color_rating_good" />
 
 
         </LinearLayout>
@@ -104,7 +105,7 @@
                 android:layout_height="40dp"
                 android:id="@+id/humanRightsRating"
                 android:layout_margin="5dp"
-                android:background="#d3ce6c" />
+                android:background="@drawable/color_raing_neutral" />
         </LinearLayout>
 
         <TextView
@@ -140,7 +141,7 @@
                 android:layout_height="40dp"
                 android:id="@+id/animalWelfareRating"
                 android:layout_margin="5dp"
-                android:background="#d36a68" />
+                android:background="@drawable/color_rating_bad" />
         </LinearLayout>
 
         <TextView
