@@ -18,7 +18,8 @@
         <activity
             android:name=".ProductOverview"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".BarcodeScanner"></activity>
+        <activity android:name=".BarcodeScanner" />
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>
