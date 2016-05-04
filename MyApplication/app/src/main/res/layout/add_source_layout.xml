@@ -15,7 +15,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
+        android:id="@+id/sourceTitleEntry"
         android:background="@drawable/rounded_layout_border"
         android:enabled="true"
         android:editable="true"
@@ -38,7 +38,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView5"
+        android:id="@+id/sourceURLEntry"
         android:background="@drawable/rounded_layout_border"
         android:padding="5dp"
         android:enabled="true"
@@ -56,18 +56,19 @@
 
     <RadioGroup
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Positive"
-            android:id="@+id/radioButton4" />
+            android:id="@+id/sourcePosRadio"
+            android:checked="true" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Negative"
-            android:id="@+id/radioButton5" />
+            android:id="@+id/sourceNegRadio" />
     </RadioGroup>
 </LinearLayout>

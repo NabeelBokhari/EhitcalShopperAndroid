@@ -1,10 +1,12 @@
 package com.example.nabeel.myapplication;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,9 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,14 +98,7 @@ public class ProductOverview extends AppCompatActivity {
         environmentSourceLayout.addView(environmentSourceOne);
         environmentSourceLayout.addView(environmentSourceTwo);
 
-        for(int i = 0; i < 5; i++) {
-            ProductSourceView envSource = createProductSource(
-                    "Demo product manufacturers advocate for environmental preservation",
-                    "time.com", true);
-            environmentSourceLayout.addView(envSource);
-        }
-
-        environmentSourceLayout.addView(createAddSourceButton());
+        environmentSourceLayout.addView(createAddSourceButton("environment"));
         //environmentSources.setText(environmentSourceInfo);
         //environmentSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
@@ -115,7 +113,7 @@ public class ProductOverview extends AppCompatActivity {
 
         humanRightsSourceLayout.addView(hrSourceOne);
         humanRightsSourceLayout.addView(hrSourceTwo);
-        humanRightsSourceLayout.addView(createAddSourceButton());
+        humanRightsSourceLayout.addView(createAddSourceButton("humanRights"));
 
         //humanRightsSources.setText(hrSourceInfo);
         //humanRightsSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -130,7 +128,7 @@ public class ProductOverview extends AppCompatActivity {
 
         animalWelfareSourceLayout.addView(awSourceOne);
         animalWelfareSourceLayout.addView(awSourceTwo);
-        animalWelfareSourceLayout.addView(createAddSourceButton());
+        animalWelfareSourceLayout.addView(createAddSourceButton("animalWelfare"));
         //animalWelfareSources.setText(animalWelfareSourceInfo);
         //animalWelfareSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
@@ -138,6 +136,13 @@ public class ProductOverview extends AppCompatActivity {
     }
 
     private ProductSourceView createProductSource(String title, String path, boolean good) {
+        if(title == null) {
+            title = "Default Title";
+        }
+
+        if(path == null) {
+            path = "example.com";
+        }
         ProductSourceView psv = new ProductSourceView(this);
         psv.setSourceTitle(title);
         psv.setSourcePath(path);
@@ -149,7 +154,7 @@ public class ProductOverview extends AppCompatActivity {
         return psv;
     }
 
-    private Button createAddSourceButton() {
+    private Button createAddSourceButton(final String category) {
         Button add = new Button(this);
         add.setText("+ Add Source");
         final Context context = this;
@@ -163,6 +168,31 @@ public class ProductOverview extends AppCompatActivity {
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Dialog d = (Dialog) dialog;
+                                EditText title = (EditText)d.findViewById(R.id.sourceTitleEntry);
+                                EditText url = (EditText)d.findViewById(R.id.sourceURLEntry);
+                                RadioButton positive = (RadioButton)d.findViewById(R.id.sourcePosRadio);
+
+                                ProductSourceView psv = createProductSource(title.getText().toString(),
+                                        url.getText().toString(), positive.isChecked());
+
+                                switch (category) {
+                                    case "environment":
+                                        environmentSourceLayout.addView(psv,
+                                                environmentSourceLayout.getChildCount()-1);
+                                        break;
+                                    case "humanRights":
+                                        humanRightsSourceLayout.addView(psv,
+                                                humanRightsSourceLayout.getChildCount()-1);
+                                        break;
+                                    case "animalWelfare":
+                                        animalWelfareSourceLayout.addView(psv,
+                                                animalWelfareSourceLayout.getChildCount()-1);
+                                        break;
+                                    default:
+                                        break;
+                                }
+
                                 Toast.makeText(context,
                                         "Your source submission is under review",
                                         Toast.LENGTH_SHORT).show();
