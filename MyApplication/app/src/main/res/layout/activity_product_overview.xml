@@ -38,206 +38,195 @@
             android:background="@drawable/solid_angled_layout_border"/>
     </LinearLayout>
 
-
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/productOverviewLayout"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/rounded_card_border">
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/environmentBanner"
-            android:onClick="expandEnvironment"
-            android:clickable="false"
-            android:background="#cecece">
+            android:layout_below="@+id/productOverviewLayout"
+            android:background="@drawable/rounded_card_border">
 
-            <TextView
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/EnvironmentLabel"
-                android:id="@+id/environmentLabel"
-                android:textSize="25sp"
-                android:textColor="#141414"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp" />
+                android:id="@+id/environmentBanner"
+                android:onClick="expandEnvironment"
+                android:clickable="false"
+                android:background="#cecece">
 
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/environmentRating"
-                android:layout_margin="5dp"
-                android:text="GOOD"
-                android:textColor="#FFFFFF"
-                android:gravity="center"
-                android:textSize="5pt"
-                android:background="@drawable/color_rating_good" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/EnvironmentLabel"
+                    android:id="@+id/environmentLabel"
+                    android:textSize="10pt"
+                    android:textColor="#141414"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp" />
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/environmentRating"
+                    android:layout_margin="5dp"
+                    android:text="GOOD"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="5pt"
+                    android:background="@drawable/color_rating_good" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/environmentSourcesScrollView"
-            android:visibility="visible"
-            android:onClick="expandEnvironment"
-            android:scrollbars="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="visible"
                 android:id="@+id/environmentSourcesLayout">
 
 
             </LinearLayout>
 
-        </ScrollView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/environmentSources"
-            android:visibility="gone"
-            android:layout_weight="1"
-            android:textSize="15sp"
-            android:textColor="#0000ee"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:scrollbars="vertical"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#cecece"
-            android:id="@+id/humanRightsBanner"
-            android:onClick="expandHumanRights">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/HumanRightsLabel"
-                android:id="@+id/humanRightsLabel"
-                android:textSize="25sp"
-                android:textColor="#141414"
+                android:id="@+id/environmentSources"
+                android:visibility="gone"
                 android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp" />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/humanRightsRating"
+                android:textSize="15sp"
+                android:textColor="#0000ee"
                 android:layout_margin="5dp"
-                android:text="OK"
-                android:textColor="#FFFFFF"
-                android:gravity="center"
-                android:textSize="5pt"
-                android:background="@drawable/color_raing_neutral" />
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/humanRightsSourcesScrollView"
-            android:visibility="gone"
-            android:onClick="expandEnvironment"
-            android:scrollbars="vertical">
+                android:padding="5dp"
+                android:scrollbars="vertical"/>
 
             <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/humanRightsSourcesLayout">
+                android:background="#cecece"
+                android:id="@+id/humanRightsBanner"
+                android:onClick="expandHumanRights">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/HumanRightsLabel"
+                    android:id="@+id/humanRightsLabel"
+                    android:textSize="10pt"
+                    android:textColor="#141414"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp" />
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/humanRightsRating"
+                    android:layout_margin="5dp"
+                    android:text="OK"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="5pt"
+                    android:background="@drawable/color_raing_neutral" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:id="@+id/humanRightsSourcesLayout">
 
 
             </LinearLayout>
 
-        </ScrollView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/humanRightsSources"
-            android:visibility="gone"
-            android:layout_weight="1"
-            android:textColor="#0000ee"
-            android:textSize="15sp"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:scrollbars="vertical"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#cecece"
-            android:id="@+id/animalWelfareBanner"
-            android:onClick="expandAnimalWelfare">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/AnimalWelfareLabel"
-                android:id="@+id/animalWelfareLabel"
-                android:textSize="25sp"
-                android:textColor="#141414"
+                android:id="@+id/humanRightsSources"
+                android:visibility="gone"
                 android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp" />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/animalWelfareRating"
+                android:textColor="#0000ee"
+                android:textSize="15sp"
                 android:layout_margin="5dp"
-                android:text="BAD"
-                android:textColor="#FFFFFF"
-                android:gravity="center"
-                android:textSize="5pt"
-                android:background="@drawable/color_rating_bad" />
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/animalWelfareSourcesScrollView"
-            android:visibility="gone"
-            android:onClick="expandEnvironment"
-            android:scrollbars="vertical">
+                android:padding="5dp"
+                android:scrollbars="vertical"/>
 
             <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/animalWelfareSourcesLayout">
+                android:background="#cecece"
+                android:id="@+id/animalWelfareBanner"
+                android:onClick="expandAnimalWelfare">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/AnimalWelfareLabel"
+                    android:id="@+id/animalWelfareLabel"
+                    android:textSize="10pt"
+                    android:textColor="#141414"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp" />
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/animalWelfareRating"
+                    android:layout_margin="5dp"
+                    android:text="BAD"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"
+                    android:textSize="5pt"
+                    android:background="@drawable/color_rating_bad" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/animalWelfareSourcesLayout"
+                    android:visibility="gone">
 
 
             </LinearLayout>
 
-        </ScrollView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/animalWelfareSources"
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:textColor="#0000ee"
+                android:textSize="15sp"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:scrollbars="vertical"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/animalWelfareSources"
-            android:visibility="gone"
-            android:layout_weight="1"
-            android:textColor="#0000ee"
-            android:textSize="15sp"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:scrollbars="vertical"/>
+        </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ratings"
+        android:id="@+id/textView"
+        android:textSize="12pt"
+        android:layout_below="@+id/productOverviewLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="5dp" />
 
 
 </RelativeLayout>

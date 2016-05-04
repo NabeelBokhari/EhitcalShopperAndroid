@@ -32,13 +32,13 @@ public class ProductOverview extends AppCompatActivity {
     TextView productDescription;
     ImageView productImage;
 
-    ScrollView environmentScroll;
+    //ScrollView environmentScroll;
     LinearLayout environmentSourceLayout;
 
-    ScrollView humanRightsScroll;
+    //ScrollView humanRightsScroll;
     LinearLayout humanRightsSourceLayout;
 
-    ScrollView animalWelfareScroll;
+    //ScrollView animalWelfareScroll;
     LinearLayout animalWelfareSourceLayout;
 
     //TextView environmentSources;
@@ -60,15 +60,15 @@ public class ProductOverview extends AppCompatActivity {
 
         productDescription = (TextView)findViewById(R.id.productOverviewDescription);
 
-        environmentScroll = (ScrollView)findViewById(R.id.environmentSourcesScrollView);
+        //environmentScroll = (ScrollView)findViewById(R.id.environmentSourcesScrollView);
         environmentSourceLayout = (LinearLayout)findViewById(R.id.environmentSourcesLayout);
         //environmentSources = (TextView)findViewById(R.id.environmentSources);
 
-        humanRightsScroll = (ScrollView)findViewById(R.id.humanRightsSourcesScrollView);
+        //humanRightsScroll = (ScrollView)findViewById(R.id.humanRightsSourcesScrollView);
         humanRightsSourceLayout = (LinearLayout)findViewById(R.id.humanRightsSourcesLayout);
         //humanRightsSources = (TextView)findViewById(R.id.humanRightsSources);
 
-        animalWelfareScroll = (ScrollView)findViewById(R.id.animalWelfareSourcesScrollView);
+        //animalWelfareScroll = (ScrollView)findViewById(R.id.animalWelfareSourcesScrollView);
         animalWelfareSourceLayout = (LinearLayout)findViewById(R.id.animalWelfareSourcesLayout);
         //animalWelfareSources = (TextView)findViewById(R.id.animalWelfareSources);
 
@@ -169,9 +169,9 @@ public class ProductOverview extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Dialog d = (Dialog) dialog;
-                                EditText title = (EditText)d.findViewById(R.id.sourceTitleEntry);
-                                EditText url = (EditText)d.findViewById(R.id.sourceURLEntry);
-                                RadioButton positive = (RadioButton)d.findViewById(R.id.sourcePosRadio);
+                                EditText title = (EditText) d.findViewById(R.id.sourceTitleEntry);
+                                EditText url = (EditText) d.findViewById(R.id.sourceURLEntry);
+                                RadioButton positive = (RadioButton) d.findViewById(R.id.sourcePosRadio);
 
                                 ProductSourceView psv = createProductSource(title.getText().toString(),
                                         url.getText().toString(), positive.isChecked());
@@ -179,15 +179,15 @@ public class ProductOverview extends AppCompatActivity {
                                 switch (category) {
                                     case "environment":
                                         environmentSourceLayout.addView(psv,
-                                                environmentSourceLayout.getChildCount()-1);
+                                                environmentSourceLayout.getChildCount() - 1);
                                         break;
                                     case "humanRights":
                                         humanRightsSourceLayout.addView(psv,
-                                                humanRightsSourceLayout.getChildCount()-1);
+                                                humanRightsSourceLayout.getChildCount() - 1);
                                         break;
                                     case "animalWelfare":
                                         animalWelfareSourceLayout.addView(psv,
-                                                animalWelfareSourceLayout.getChildCount()-1);
+                                                animalWelfareSourceLayout.getChildCount() - 1);
                                         break;
                                     default:
                                         break;
@@ -253,9 +253,12 @@ public class ProductOverview extends AppCompatActivity {
         //animalWelfareSources.setVisibility(View.GONE);
         //environmentSources.setVisibility(View.VISIBLE);
 
-        humanRightsScroll.setVisibility(View.GONE);
-        animalWelfareScroll.setVisibility(View.GONE);
-        environmentScroll.setVisibility(View.VISIBLE);
+        environmentSourceLayout.setVisibility(environmentSourceLayout.getVisibility() == View.VISIBLE ?
+                View.GONE : View.VISIBLE);
+
+//        humanRightsSourceLayout.setVisibility(View.GONE);
+//        animalWelfareSourceLayout.setVisibility(View.GONE);
+//        environmentSourceLayout.setVisibility(View.VISIBLE);
     }
 
     public void expandHumanRights (View view) {
@@ -263,9 +266,12 @@ public class ProductOverview extends AppCompatActivity {
         //animalWelfareSources.setVisibility(View.GONE);
         //environmentSources.setVisibility(View.GONE);
 
-        humanRightsScroll.setVisibility(View.VISIBLE);
-        animalWelfareScroll.setVisibility(View.GONE);
-        environmentScroll.setVisibility(View.GONE);
+//        humanRightsSourceLayout.setVisibility(View.VISIBLE);
+//        animalWelfareSourceLayout.setVisibility(View.GONE);
+//        environmentSourceLayout.setVisibility(View.GONE);
+
+        humanRightsSourceLayout.setVisibility(humanRightsSourceLayout.getVisibility() == View.VISIBLE ?
+                View.GONE : View.VISIBLE);
     }
 
     public void expandAnimalWelfare (View view) {
@@ -273,8 +279,11 @@ public class ProductOverview extends AppCompatActivity {
         //animalWelfareSources.setVisibility(View.VISIBLE);
         //environmentSources.setVisibility(View.GONE);
 
-        humanRightsScroll.setVisibility(View.GONE);
-        animalWelfareScroll.setVisibility(View.VISIBLE);
-        environmentScroll.setVisibility(View.GONE);
+//        humanRightsSourceLayout.setVisibility(View.GONE);
+//        animalWelfareSourceLayout.setVisibility(View.VISIBLE);
+//        environmentSourceLayout.setVisibility(View.GONE);
+
+        animalWelfareSourceLayout.setVisibility(animalWelfareSourceLayout.getVisibility() == View.VISIBLE ?
+                View.GONE : View.VISIBLE);
     }
 }
