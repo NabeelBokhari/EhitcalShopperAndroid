@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:nestedScrollingEnabled="false">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Source Title"
+        android:id="@+id/textView2"
+        android:paddingTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:background="@drawable/rounded_layout_border"
+        android:enabled="true"
+        android:editable="true"
+        android:hint="Enter the title of your source"
+        android:maxLines="2"
+        android:scrollbars="vertical"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
+        android:padding="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Source URL"
+        android:id="@+id/textView4"
+        android:paddingTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:background="@drawable/rounded_layout_border"
+        android:padding="5dp"
+        android:enabled="true"
+        android:editable="true"
+        android:maxLines="2"
+        android:scrollbars="vertical"
+        android:hint="Enter the url of your source" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Source Type"
+        android:id="@+id/textView6"
+        android:paddingTop="10dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Positive"
+            android:id="@+id/radioButton4" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Negative"
+            android:id="@+id/radioButton5" />
+    </RadioGroup>
+</LinearLayout>

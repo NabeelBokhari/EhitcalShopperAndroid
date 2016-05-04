@@ -81,11 +81,31 @@
 
         </LinearLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/environmentSourcesScrollView"
+            android:visibility="visible"
+            android:onClick="expandEnvironment"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/environmentSourcesLayout">
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/environmentSources"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_weight="1"
             android:textSize="15sp"
             android:textColor="#0000ee"
@@ -122,6 +142,26 @@
                 android:textSize="5pt"
                 android:background="@drawable/color_raing_neutral" />
         </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/humanRightsSourcesScrollView"
+            android:visibility="gone"
+            android:onClick="expandEnvironment"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/humanRightsSourcesLayout">
+
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <TextView
             android:layout_width="match_parent"
@@ -164,6 +204,26 @@
                 android:textSize="5pt"
                 android:background="@drawable/color_rating_bad" />
         </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/animalWelfareSourcesScrollView"
+            android:visibility="gone"
+            android:onClick="expandEnvironment"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/animalWelfareSourcesLayout">
+
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <TextView
             android:layout_width="match_parent"

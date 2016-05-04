@@ -1,16 +1,23 @@
 package com.example.nabeel.myapplication;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +27,26 @@ public class ProductOverview extends AppCompatActivity {
     TextView productDescription;
     ImageView productImage;
 
-    TextView environmentSources;
-    TextView humanRightsSources;
-    TextView animalWelfareSources;
+    ScrollView environmentScroll;
+    LinearLayout environmentSourceLayout;
+
+    ScrollView humanRightsScroll;
+    LinearLayout humanRightsSourceLayout;
+
+    ScrollView animalWelfareScroll;
+    LinearLayout animalWelfareSourceLayout;
+
+    //TextView environmentSources;
+    //TextView humanRightsSources;
+    //TextView animalWelfareSources;
 
     String environmentSourceInfo;
     String hrSourceInfo;
     String animalWelfareSourceInfo;
+
+    Button addSourceEnv;
+    Button addSourceHr;
+    Button addSourceAw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +55,17 @@ public class ProductOverview extends AppCompatActivity {
 
         productDescription = (TextView)findViewById(R.id.productOverviewDescription);
 
-        environmentSources = (TextView)findViewById(R.id.environmentSources);
-        humanRightsSources = (TextView)findViewById(R.id.humanRightsSources);
-        animalWelfareSources = (TextView)findViewById(R.id.animalWelfareSources);
+        environmentScroll = (ScrollView)findViewById(R.id.environmentSourcesScrollView);
+        environmentSourceLayout = (LinearLayout)findViewById(R.id.environmentSourcesLayout);
+        //environmentSources = (TextView)findViewById(R.id.environmentSources);
+
+        humanRightsScroll = (ScrollView)findViewById(R.id.humanRightsSourcesScrollView);
+        humanRightsSourceLayout = (LinearLayout)findViewById(R.id.humanRightsSourcesLayout);
+        //humanRightsSources = (TextView)findViewById(R.id.humanRightsSources);
+
+        animalWelfareScroll = (ScrollView)findViewById(R.id.animalWelfareSourcesScrollView);
+        animalWelfareSourceLayout = (LinearLayout)findViewById(R.id.animalWelfareSourcesLayout);
+        //animalWelfareSources = (TextView)findViewById(R.id.animalWelfareSources);
 
         init();
     }
@@ -53,20 +81,103 @@ public class ProductOverview extends AppCompatActivity {
 
         setTitle("Demo Product");
 
-        environmentSourceInfo = "+ Demo Product recognized for good environmental practices\n\n" +
-                "+ Demo product manufacturers advocate for environmental preservation";
-        environmentSources.setText(environmentSourceInfo);
-        environmentSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        /*environmentSourceInfo = "+ Demo Product recognized for good environmental practices\n\n" +
+                "+ Demo product manufacturers advocate for environmental preservation";*/
 
-        hrSourceInfo = "+ Demo Product manufacturers outline new working condition policies\n\n" +
-                "- Demo Product manufacturers raise concerns about labor rights";
-        humanRightsSources.setText(hrSourceInfo);
-        humanRightsSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        ProductSourceView environmentSourceOne = createProductSource(
+                "Demo Product recognized for good environmental practices", "cnn.com", true);
+        ProductSourceView environmentSourceTwo = createProductSource(
+                "Demo product manufacturers advocate for environmental preservation",
+                "time.com", true);
 
-        animalWelfareSourceInfo = "- Demo Product known to be tested on animals\n\n" +
-                "- Evidence that Demo Product is tested on animals";
-        animalWelfareSources.setText(animalWelfareSourceInfo);
-        animalWelfareSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        environmentSourceLayout.addView(environmentSourceOne);
+        environmentSourceLayout.addView(environmentSourceTwo);
+
+        for(int i = 0; i < 5; i++) {
+            ProductSourceView envSource = createProductSource(
+                    "Demo product manufacturers advocate for environmental preservation",
+                    "time.com", true);
+            environmentSourceLayout.addView(envSource);
+        }
+
+        environmentSourceLayout.addView(createAddSourceButton());
+        //environmentSources.setText(environmentSourceInfo);
+        //environmentSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        /*hrSourceInfo = "+ Demo Product manufacturers outline new working condition policies\n\n" +
+                "- Demo Product manufacturers raise concerns about labor rights";*/
+
+        ProductSourceView hrSourceOne = createProductSource(
+                "Demo Product manufacturers outline new working condition policies", "salon.com", true);
+        ProductSourceView hrSourceTwo = createProductSource(
+                "Demo Product manufacturers raise concerns about labor rights",
+                "bbc.co.uk", false);
+
+        humanRightsSourceLayout.addView(hrSourceOne);
+        humanRightsSourceLayout.addView(hrSourceTwo);
+        humanRightsSourceLayout.addView(createAddSourceButton());
+
+        //humanRightsSources.setText(hrSourceInfo);
+        //humanRightsSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        //animalWelfareSourceInfo = "- Demo Product known to be tested on animals\n\n" + "- Evidence that Demo Product is tested on animals";
+
+        ProductSourceView awSourceOne = createProductSource(
+                "Demo Product known to be tested on animals", "nyt.com", false);
+        ProductSourceView awSourceTwo = createProductSource(
+                "Evidence that Demo Product is tested on animals",
+                "dawn.com", false);
+
+        animalWelfareSourceLayout.addView(awSourceOne);
+        animalWelfareSourceLayout.addView(awSourceTwo);
+        animalWelfareSourceLayout.addView(createAddSourceButton());
+        //animalWelfareSources.setText(animalWelfareSourceInfo);
+        //animalWelfareSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+
+    }
+
+    private ProductSourceView createProductSource(String title, String path, boolean good) {
+        ProductSourceView psv = new ProductSourceView(this);
+        psv.setSourceTitle(title);
+        psv.setSourcePath(path);
+        if(good) {
+            psv.setGoodSource();
+        } else {
+            psv.setBadSource();
+        }
+        return psv;
+    }
+
+    private Button createAddSourceButton() {
+        Button add = new Button(this);
+        add.setText("+ Add Source");
+        final Context context = this;
+        final LayoutInflater inflater = this.getLayoutInflater();
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setView(inflater.inflate(R.layout.add_source_layout, null))
+                        .setTitle("Add Source")
+                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(context,
+                                        "Your source submission is under review",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
+            }
+        });
+        return add;
     }
 
     @Override
@@ -108,20 +219,32 @@ public class ProductOverview extends AppCompatActivity {
     }
 
     public void expandEnvironment (View view) {
-        humanRightsSources.setVisibility(View.GONE);
-        animalWelfareSources.setVisibility(View.GONE);
-        environmentSources.setVisibility(View.VISIBLE);
+        //humanRightsSources.setVisibility(View.GONE);
+        //animalWelfareSources.setVisibility(View.GONE);
+        //environmentSources.setVisibility(View.VISIBLE);
+
+        humanRightsScroll.setVisibility(View.GONE);
+        animalWelfareScroll.setVisibility(View.GONE);
+        environmentScroll.setVisibility(View.VISIBLE);
     }
 
     public void expandHumanRights (View view) {
-        humanRightsSources.setVisibility(View.VISIBLE);
-        animalWelfareSources.setVisibility(View.GONE);
-        environmentSources.setVisibility(View.GONE);
+        //humanRightsSources.setVisibility(View.VISIBLE);
+        //animalWelfareSources.setVisibility(View.GONE);
+        //environmentSources.setVisibility(View.GONE);
+
+        humanRightsScroll.setVisibility(View.VISIBLE);
+        animalWelfareScroll.setVisibility(View.GONE);
+        environmentScroll.setVisibility(View.GONE);
     }
 
     public void expandAnimalWelfare (View view) {
-        humanRightsSources.setVisibility(View.GONE);
-        animalWelfareSources.setVisibility(View.VISIBLE);
-        environmentSources.setVisibility(View.GONE);
+        //humanRightsSources.setVisibility(View.GONE);
+        //animalWelfareSources.setVisibility(View.VISIBLE);
+        //environmentSources.setVisibility(View.GONE);
+
+        humanRightsScroll.setVisibility(View.GONE);
+        animalWelfareScroll.setVisibility(View.VISIBLE);
+        environmentScroll.setVisibility(View.GONE);
     }
 }
