@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void launchSearch (View view){
+        Intent searchIntent = new Intent(this, SearchableActivity.class);
+        startActivity(searchIntent);
+    }
+
     public void launchBarcodeScanner (View view) {
        /* setContentView(R.layout.activity_camera_view);
         mCamera = Camera.open();
