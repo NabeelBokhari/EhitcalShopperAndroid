@@ -31,7 +31,11 @@
             android:layout_height="match_parent"
             android:text="New Text"
             android:id="@+id/productOverviewDescription"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:textColor="#222222"
+            android:padding="5dp"
+            android:scrollbars="vertical"
+            android:background="@drawable/solid_angled_layout_border"/>
     </LinearLayout>
 
 
@@ -40,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/productOverviewLayout"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rounded_card_border">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -62,11 +67,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp" />
 
-            <ImageView
+            <TextView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/environmentRating"
                 android:layout_margin="5dp"
+                android:text="GOOD"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:textSize="5pt"
                 android:background="@drawable/color_rating_good" />
 
 
@@ -80,7 +89,9 @@
             android:layout_weight="1"
             android:textSize="15sp"
             android:textColor="#0000ee"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:scrollbars="vertical"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -100,11 +111,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp" />
 
-            <ImageView
+            <TextView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/humanRightsRating"
                 android:layout_margin="5dp"
+                android:text="OK"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:textSize="5pt"
                 android:background="@drawable/color_raing_neutral" />
         </LinearLayout>
 
@@ -116,7 +131,9 @@
             android:layout_weight="1"
             android:textColor="#0000ee"
             android:textSize="15sp"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:scrollbars="vertical"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -136,11 +153,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp" />
 
-            <ImageView
+            <TextView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/animalWelfareRating"
                 android:layout_margin="5dp"
+                android:text="BAD"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:textSize="5pt"
                 android:background="@drawable/color_rating_bad" />
         </LinearLayout>
 
@@ -152,7 +173,9 @@
             android:layout_weight="1"
             android:textColor="#0000ee"
             android:textSize="15sp"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:scrollbars="vertical"/>
 
     </LinearLayout>
 
