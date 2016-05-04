@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void launchSearch (View view){
+        Intent searchIntent = new Intent(this, SearchableActivity.class);
+        startActivity(searchIntent);
+    }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
