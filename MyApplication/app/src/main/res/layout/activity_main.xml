@@ -31,7 +31,9 @@
         android:layout_alignLeft="@+id/demoProduct"
         android:layout_alignStart="@+id/demoProduct"
         android:layout_alignRight="@+id/demoProduct"
-        android:layout_alignEnd="@+id/demoProduct" />
+        android:layout_alignEnd="@+id/demoProduct"
+        android:onClick="launchBarcodeScanner"/>
+    />
 
     <Button
         android:layout_width="wrap_content"
