@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ethical Shopping</string>
+    <string name="app_name">Ethical Shopper</string>
     <string name="EnvironmentLabel">Environmental Impact</string>
     <string name="HumanRightsLabel">Human Rights</string>
     <string name="AnimalWelfareLabel">Animal Welfare</string>

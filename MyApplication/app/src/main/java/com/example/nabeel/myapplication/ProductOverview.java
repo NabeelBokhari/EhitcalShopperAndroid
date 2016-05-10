@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,32 +27,26 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
+
 public class ProductOverview extends AppCompatActivity {
     final String demoText = "This product is a demo product created by Company X. It was released in 2016.";
+    final double GOOD_THRESHOLD = .75;
 
     TextView productDescription;
     ImageView productImage;
 
     //ScrollView environmentScroll;
     LinearLayout environmentSourceLayout;
+    TextView environmentRating;
 
     //ScrollView humanRightsScroll;
     LinearLayout humanRightsSourceLayout;
+    TextView hrRating;
 
     //ScrollView animalWelfareScroll;
     LinearLayout animalWelfareSourceLayout;
-
-    //TextView environmentSources;
-    //TextView humanRightsSources;
-    //TextView animalWelfareSources;
-
-    String environmentSourceInfo;
-    String hrSourceInfo;
-    String animalWelfareSourceInfo;
-
-    Button addSourceEnv;
-    Button addSourceHr;
-    Button addSourceAw;
+    TextView awRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +55,14 @@ public class ProductOverview extends AppCompatActivity {
 
         productDescription = (TextView)findViewById(R.id.productOverviewDescription);
 
-        //environmentScroll = (ScrollView)findViewById(R.id.environmentSourcesScrollView);
         environmentSourceLayout = (LinearLayout)findViewById(R.id.environmentSourcesLayout);
-        //environmentSources = (TextView)findViewById(R.id.environmentSources);
+        environmentRating = (TextView)findViewById(R.id.environmentRating);
 
-        //humanRightsScroll = (ScrollView)findViewById(R.id.humanRightsSourcesScrollView);
         humanRightsSourceLayout = (LinearLayout)findViewById(R.id.humanRightsSourcesLayout);
-        //humanRightsSources = (TextView)findViewById(R.id.humanRightsSources);
+        hrRating = (TextView)findViewById(R.id.humanRightsRating);
 
-        //animalWelfareScroll = (ScrollView)findViewById(R.id.animalWelfareSourcesScrollView);
         animalWelfareSourceLayout = (LinearLayout)findViewById(R.id.animalWelfareSourcesLayout);
-        //animalWelfareSources = (TextView)findViewById(R.id.animalWelfareSources);
+        awRating = (TextView)findViewById(R.id.animalWelfareRating);
 
         init();
     }
@@ -84,10 +76,15 @@ public class ProductOverview extends AppCompatActivity {
             productDescription.setText(demoText);
         }
 
-        setTitle("Demo Product");
+        if(intent != null && intent.getStringExtra("productName") != null) {
+            setTitle(intent.getStringExtra("productName"));
+        } else {
+            setTitle("Demo Product");
+        }
 
-        /*environmentSourceInfo = "+ Demo Product recognized for good environmental practices\n\n" +
-                "+ Demo product manufacturers advocate for environmental preservation";*/
+        if(intent != null & intent.getByteArrayExtra("icon") != null) {
+
+        }
 
         ProductSourceView environmentSourceOne = createProductSource(
                 "Demo Product recognized for good environmental practices", "cnn.com", true);
@@ -95,15 +92,20 @@ public class ProductOverview extends AppCompatActivity {
                 "Demo product manufacturers advocate for environmental preservation",
                 "time.com", true);
 
+        environmentSourceOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "http://www.starbucks.com/responsibility/environment";
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
         environmentSourceLayout.addView(environmentSourceOne);
         environmentSourceLayout.addView(environmentSourceTwo);
 
         environmentSourceLayout.addView(createAddSourceButton("environment"));
-        //environmentSources.setText(environmentSourceInfo);
-        //environmentSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
-        /*hrSourceInfo = "+ Demo Product manufacturers outline new working condition policies\n\n" +
-                "- Demo Product manufacturers raise concerns about labor rights";*/
 
         ProductSourceView hrSourceOne = createProductSource(
                 "Demo Product manufacturers outline new working condition policies", "salon.com", true);
@@ -115,11 +117,6 @@ public class ProductOverview extends AppCompatActivity {
         humanRightsSourceLayout.addView(hrSourceTwo);
         humanRightsSourceLayout.addView(createAddSourceButton("humanRights"));
 
-        //humanRightsSources.setText(hrSourceInfo);
-        //humanRightsSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
-        //animalWelfareSourceInfo = "- Demo Product known to be tested on animals\n\n" + "- Evidence that Demo Product is tested on animals";
-
         ProductSourceView awSourceOne = createProductSource(
                 "Demo Product known to be tested on animals", "nyt.com", false);
         ProductSourceView awSourceTwo = createProductSource(
@@ -129,10 +126,8 @@ public class ProductOverview extends AppCompatActivity {
         animalWelfareSourceLayout.addView(awSourceOne);
         animalWelfareSourceLayout.addView(awSourceTwo);
         animalWelfareSourceLayout.addView(createAddSourceButton("animalWelfare"));
-        //animalWelfareSources.setText(animalWelfareSourceInfo);
-        //animalWelfareSources.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
-
+        calculateRatings();
     }
 
     private ProductSourceView createProductSource(String title, String path, boolean good) {
@@ -196,6 +191,7 @@ public class ProductOverview extends AppCompatActivity {
                                 Toast.makeText(context,
                                         "Your source submission is under review",
                                         Toast.LENGTH_SHORT).show();
+                                calculateRatings();
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -208,6 +204,63 @@ public class ProductOverview extends AppCompatActivity {
             }
         });
         return add;
+    }
+
+    private void calculateRatings() {
+        int environmentSourceCount = environmentSourceLayout.getChildCount() - 1;
+        int i;
+        int goodCount = 0;
+        double goodRatio;
+        ProductSourceView psv;
+        for(i = 0; i < environmentSourceCount; i++) {
+            psv = (ProductSourceView)environmentSourceLayout.getChildAt(i);
+            if(psv.isPositive()) {
+                goodCount++;
+            }
+
+        }
+        goodRatio = environmentSourceCount > 0 ? (double)goodCount/environmentSourceCount : -1;
+        setRating(environmentRating, goodRatio);
+
+        goodCount = 0;
+        int hrSourceCount = humanRightsSourceLayout.getChildCount() - 1;
+        for(i = 0; i < hrSourceCount; i++) {
+            psv = (ProductSourceView)humanRightsSourceLayout.getChildAt(i);
+            if(psv.isPositive()) {
+                goodCount++;
+            }
+        }
+        goodRatio = hrSourceCount > 0 ? (double)goodCount/hrSourceCount : -1;
+        setRating(hrRating, goodRatio);
+
+        goodCount = 0;
+        int awSourceCount = animalWelfareSourceLayout.getChildCount() - 1;
+        for(i = 0; i < awSourceCount; i++) {
+            psv = (ProductSourceView)animalWelfareSourceLayout.getChildAt(i);
+            if(psv.isPositive()) {
+                goodCount++;
+            }
+        }
+        goodRatio = awSourceCount > 0 ? (double)goodCount/awSourceCount : -1;
+        setRating(awRating, goodRatio);
+    }
+
+    private void setRating (TextView ratingView, double ratio) {
+        if(ratio == -1) {
+            ratingView.setBackgroundResource(R.drawable.color_rating_none);
+            ratingView.setText("N/A");
+        }
+
+        if(ratio >= GOOD_THRESHOLD) {
+            ratingView.setBackgroundResource(R.drawable.color_rating_good);
+            ratingView.setText("GOOD");
+        } else if (ratio >= .5) {
+            ratingView.setBackgroundResource(R.drawable.color_rating_neutral);
+            ratingView.setText("OK");
+        } else {
+            ratingView.setBackgroundResource(R.drawable.color_rating_bad);
+            ratingView.setText("BAD");
+        }
     }
 
     @Override
@@ -249,41 +302,26 @@ public class ProductOverview extends AppCompatActivity {
     }
 
     public void expandEnvironment (View view) {
-        //humanRightsSources.setVisibility(View.GONE);
-        //animalWelfareSources.setVisibility(View.GONE);
-        //environmentSources.setVisibility(View.VISIBLE);
-
         environmentSourceLayout.setVisibility(environmentSourceLayout.getVisibility() == View.VISIBLE ?
                 View.GONE : View.VISIBLE);
-
-//        humanRightsSourceLayout.setVisibility(View.GONE);
-//        animalWelfareSourceLayout.setVisibility(View.GONE);
-//        environmentSourceLayout.setVisibility(View.VISIBLE);
+        ImageView arrow = (ImageView)findViewById(R.id.envArrow);
+        arrow.setBackgroundResource(environmentSourceLayout.getVisibility() == View.VISIBLE ?
+        R.drawable.ic_keyboard_arrow_down_black_48dp : R.drawable.ic_keyboard_arrow_up_black_48dp);
     }
 
     public void expandHumanRights (View view) {
-        //humanRightsSources.setVisibility(View.VISIBLE);
-        //animalWelfareSources.setVisibility(View.GONE);
-        //environmentSources.setVisibility(View.GONE);
-
-//        humanRightsSourceLayout.setVisibility(View.VISIBLE);
-//        animalWelfareSourceLayout.setVisibility(View.GONE);
-//        environmentSourceLayout.setVisibility(View.GONE);
-
         humanRightsSourceLayout.setVisibility(humanRightsSourceLayout.getVisibility() == View.VISIBLE ?
                 View.GONE : View.VISIBLE);
+        ImageView arrow = (ImageView)findViewById(R.id.hrArrow);
+        arrow.setBackgroundResource(humanRightsSourceLayout.getVisibility() == View.VISIBLE ?
+                R.drawable.ic_keyboard_arrow_down_black_48dp : R.drawable.ic_keyboard_arrow_up_black_48dp);
     }
 
     public void expandAnimalWelfare (View view) {
-        //humanRightsSources.setVisibility(View.GONE);
-        //animalWelfareSources.setVisibility(View.VISIBLE);
-        //environmentSources.setVisibility(View.GONE);
-
-//        humanRightsSourceLayout.setVisibility(View.GONE);
-//        animalWelfareSourceLayout.setVisibility(View.VISIBLE);
-//        environmentSourceLayout.setVisibility(View.GONE);
-
         animalWelfareSourceLayout.setVisibility(animalWelfareSourceLayout.getVisibility() == View.VISIBLE ?
                 View.GONE : View.VISIBLE);
+        ImageView arrow = (ImageView)findViewById(R.id.awArrow);
+        arrow.setBackgroundResource(animalWelfareSourceLayout.getVisibility() == View.VISIBLE ?
+                R.drawable.ic_keyboard_arrow_down_black_48dp : R.drawable.ic_keyboard_arrow_up_black_48dp);
     }
 }

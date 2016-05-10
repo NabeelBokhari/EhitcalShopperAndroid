@@ -5,16 +5,24 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class SearchableActivity extends AppCompatActivity {
 
     ArrayAdapter<String> mResultsAdapter;
     private ListView mResultsList;
+    private EditText filterText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +36,9 @@ public class SearchableActivity extends AppCompatActivity {
         }
 
         mResultsList = (ListView)findViewById(R.id.resultsList);
+        filterText = (EditText)findViewById(R.id.searchFilter);
         addSearchResults();
+        setFilterListener();
     }
 
     public void doMySearch(String query){
@@ -37,14 +47,51 @@ public class SearchableActivity extends AppCompatActivity {
 
     private void addSearchResults() {
         ArrayList<String> myStringArray1 = new ArrayList<String>();
+        myStringArray1.add("Apple iPhone");
+        myStringArray1.add("Coca-Cola");
         myStringArray1.add("Demo Product");
+        myStringArray1.add("Lipton Iced Tea");
+        myStringArray1.add("Macbook Air");
+        myStringArray1.add("MD Dairy Ice Cream");
+        myStringArray1.add("Mountain Dew");
+        myStringArray1.add("Skinny Cow Bars");
+        myStringArray1.add("Starbucks Coffee");
+        myStringArray1.add("Under Armour");
 
         mResultsAdapter = new ArrayAdapter<String>(this, R.layout.result_view, myStringArray1);
         mResultsList.setAdapter(mResultsAdapter);
     }
 
+    private void setFilterListener() {
+        filterText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mResultsAdapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     public void launchDemoOverview (View view) {
         Intent intent = new Intent(this, ProductOverview.class);
+        startActivity(intent);
+    }
+
+    public void launchOverview (View view) {
+        TextView textView = (TextView)(view);
+
+        String text = textView.getText().toString();
+        Intent intent = new Intent(this, ProductOverview.class);
+        intent.putExtra("productName", text);
         startActivity(intent);
     }
 }

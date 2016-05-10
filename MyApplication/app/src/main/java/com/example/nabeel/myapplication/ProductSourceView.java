@@ -1,11 +1,13 @@
 package com.example.nabeel.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -20,6 +22,7 @@ public class ProductSourceView extends LinearLayout {
     TextView sourceTitle;
     ImageView sourceTypeImage;
     TextView sourcePath;
+    private boolean positive;
 
     public ProductSourceView(Context context) {
         super(context);
@@ -52,10 +55,12 @@ public class ProductSourceView extends LinearLayout {
 
     public void setGoodSource() {
         sourceTypeImage.setBackgroundResource(R.drawable.color_rating_good);
+        positive = true;
     }
 
     public void setBadSource() {
         sourceTypeImage.setBackgroundResource(R.drawable.color_rating_bad);
+        positive = false;
     }
 
     public void setSourceTitle(String title) {
@@ -65,4 +70,60 @@ public class ProductSourceView extends LinearLayout {
     public void setSourcePath(String path) {
         sourcePath.setText("--" + path);
     }
+
+    public void setAttributes (final ProductSource source) {
+        setSourceTitle(source.getTitle());
+        setSourcePath(source.getSourceName());
+        if (source.getPositive()) {
+            setGoodSource();
+        } else {
+            setBadSource();
+        }
+        sourceTitle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(source.getUrl() == null) {
+                    return;
+                }
+                Uri uri = Uri.parse(source.getUrl());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(source.getUrl()));
+                getContext().startActivity(intent);
+            }
+        });
+    }
+
+    public boolean isPositive() {
+        return positive;
+    }
+
+    public class ProductSource {
+        String title;
+        String url;
+        String sourceName;
+        boolean positive;
+
+        public ProductSource(String title, String url, String sourceName, boolean positive) {
+            this.title = title;
+            this.url = url;
+            this.sourceName = sourceName;
+            this.positive = positive;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public String getSourceName() {
+            return sourceName;
+        }
+
+        public boolean getPositive() {
+            return positive;
+        }
+    }
+
 }

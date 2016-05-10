@@ -78,11 +78,18 @@
                     android:layout_height="40dp"
                     android:id="@+id/environmentRating"
                     android:layout_margin="5dp"
-                    android:text="GOOD"
+                    android:text="N/A"
                     android:textColor="#FFFFFF"
                     android:gravity="center"
                     android:textSize="5pt"
-                    android:background="@drawable/color_rating_good" />
+                    android:background="@drawable/color_rating_none" />
+
+                <ImageView
+                    android:id="@+id/envArrow"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_keyboard_arrow_down_black_48dp"/>
 
 
             </LinearLayout>
@@ -133,11 +140,18 @@
                     android:layout_height="40dp"
                     android:id="@+id/humanRightsRating"
                     android:layout_margin="5dp"
-                    android:text="OK"
+                    android:text="N/A"
                     android:textColor="#FFFFFF"
                     android:gravity="center"
                     android:textSize="5pt"
-                    android:background="@drawable/color_raing_neutral" />
+                    android:background="@drawable/color_rating_none" />
+
+                <ImageView
+                    android:id="@+id/hrArrow"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_keyboard_arrow_up_black_48dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -185,11 +199,18 @@
                     android:layout_height="40dp"
                     android:id="@+id/animalWelfareRating"
                     android:layout_margin="5dp"
-                    android:text="BAD"
+                    android:text="N/A"
                     android:textColor="#FFFFFF"
                     android:gravity="center"
                     android:textSize="5pt"
-                    android:background="@drawable/color_rating_bad" />
+                    android:background="@drawable/color_rating_none" />
+
+                <ImageView
+                    android:id="@+id/awArrow"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_keyboard_arrow_up_black_48dp"/>
             </LinearLayout>
 
             <LinearLayout
