@@ -28,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductOverview extends AppCompatActivity {
     final String demoText = "This product is a demo product created by Company X. It was released in 2016.";
@@ -76,14 +78,18 @@ public class ProductOverview extends AppCompatActivity {
             productDescription.setText(demoText);
         }
 
+        String prodName = "";
+
         if(intent != null && intent.getStringExtra("productName") != null) {
-            setTitle(intent.getStringExtra("productName"));
+            prodName = intent.getStringExtra("productName");
+            setTitle(prodName);
         } else {
             setTitle("Demo Product");
         }
 
-        if(intent != null & intent.getByteArrayExtra("icon") != null) {
-
+        if(intent != null && intent.getSerializableExtra("sources") != null) {
+            initFromSources((HashMap)intent.getSerializableExtra("sources"));
+            return;
         }
 
         ProductSourceView environmentSourceOne = createProductSource(
@@ -92,15 +98,15 @@ public class ProductOverview extends AppCompatActivity {
                 "Demo product manufacturers advocate for environmental preservation",
                 "time.com", true);
 
-        environmentSourceOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = "http://www.starbucks.com/responsibility/environment";
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-        });
+//        environmentSourceOne.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String url = "http://www.starbucks.com/responsibility/environment";
+//                Uri uri = Uri.parse(url);
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                startActivity(intent);
+//            }
+//        });
 
         environmentSourceLayout.addView(environmentSourceOne);
         environmentSourceLayout.addView(environmentSourceTwo);
@@ -125,6 +131,47 @@ public class ProductOverview extends AppCompatActivity {
 
         animalWelfareSourceLayout.addView(awSourceOne);
         animalWelfareSourceLayout.addView(awSourceTwo);
+        animalWelfareSourceLayout.addView(createAddSourceButton("animalWelfare"));
+
+        calculateRatings();
+    }
+
+    private void initFromSources(HashMap map) {
+        HashMap<String, ArrayList<ProductSourceView.ProductSource>> sources =
+                (HashMap<String, ArrayList<ProductSourceView.ProductSource>>)map;
+
+        ProductSourceView psv;
+        ArrayList<ProductSourceView.ProductSource> sourceList = sources.get("environment");
+        if(sourceList != null) {
+            for(ProductSourceView.ProductSource source : sourceList) {
+                psv = new ProductSourceView(this);
+                psv.setAttributes(source);
+                environmentSourceLayout.addView(psv);
+            }
+        }
+
+        environmentSourceLayout.addView(createAddSourceButton("environment"));
+
+        sourceList = sources.get("humanRights");
+        if(sourceList != null) {
+            for(ProductSourceView.ProductSource source : sourceList) {
+                psv = new ProductSourceView(this);
+                psv.setAttributes(source);
+                humanRightsSourceLayout.addView(psv);
+            }
+        }
+
+        humanRightsSourceLayout.addView(createAddSourceButton("humanRights"));
+
+        sourceList = sources.get("animalWelfare");
+        if(sourceList != null) {
+            for(ProductSourceView.ProductSource source : sourceList) {
+                psv = new ProductSourceView(this);
+                psv.setAttributes(source);
+                animalWelfareSourceLayout.addView(psv);
+            }
+        }
+
         animalWelfareSourceLayout.addView(createAddSourceButton("animalWelfare"));
 
         calculateRatings();
@@ -249,6 +296,7 @@ public class ProductOverview extends AppCompatActivity {
         if(ratio == -1) {
             ratingView.setBackgroundResource(R.drawable.color_rating_none);
             ratingView.setText("N/A");
+            return;
         }
 
         if(ratio >= GOOD_THRESHOLD) {

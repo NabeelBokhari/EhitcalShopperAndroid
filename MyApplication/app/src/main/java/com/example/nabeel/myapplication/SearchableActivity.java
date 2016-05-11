@@ -92,6 +92,31 @@ public class SearchableActivity extends AppCompatActivity {
         String text = textView.getText().toString();
         Intent intent = new Intent(this, ProductOverview.class);
         intent.putExtra("productName", text);
+
+        HashMap<String, ArrayList<ProductSourceView.ProductSource>> sources = getSources(text);
+        if(sources != null) {
+            intent.putExtra("sources", sources);
+        }
+
         startActivity(intent);
+    }
+
+    public HashMap getSources(String productName) {
+        switch(productName) {
+            case "Starbucks Coffee":
+                HashMap<String, ArrayList<ProductSourceView.ProductSource>> sources =
+                        new HashMap<String, ArrayList<ProductSourceView.ProductSource>>();
+                String title = "Starbucks advocates for environmental preservation";
+                ProductSourceView.ProductSource environment =
+                        new ProductSourceView.ProductSource(title, "http://www.starbucks.com/responsibility/environment",
+                                "starbucks.com", true);
+                ArrayList<ProductSourceView.ProductSource> envSources = new ArrayList<ProductSourceView.ProductSource>();
+                envSources.add(environment);
+
+                sources.put("environment", envSources);
+                return sources;
+            default:
+                return null;
+        }
     }
 }

@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 /**
  * TODO: document your custom view class.
  */
@@ -96,7 +98,7 @@ public class ProductSourceView extends LinearLayout {
         return positive;
     }
 
-    public class ProductSource {
+    public static class ProductSource implements Serializable{
         String title;
         String url;
         String sourceName;
