@@ -28,14 +28,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(searchIntent);
     }
 
+    /*Launches the camera view to mock scanning a barcode*/
     public void launchBarcodeScanner (View view) {
-       /* setContentView(R.layout.activity_camera_view);
-        mCamera = Camera.open();
-        camera = new CameraView(getApplicationContext(), mCamera);;
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-        preview.addView(preview)*/;
-
-
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             Toast toast = Toast.makeText(this.getApplicationContext(), "Take a photo of the barcode", Toast.LENGTH_LONG);
@@ -46,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /*After successfully capturing a photo, launch the demo Product Overview to simulate
+     the result of scanning a barcode*/
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {

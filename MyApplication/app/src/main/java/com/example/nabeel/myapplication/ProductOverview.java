@@ -38,15 +38,12 @@ public class ProductOverview extends AppCompatActivity {
     TextView productDescription;
     ImageView productImage;
 
-    //ScrollView environmentScroll;
     LinearLayout environmentSourceLayout;
     TextView environmentRating;
 
-    //ScrollView humanRightsScroll;
     LinearLayout humanRightsSourceLayout;
     TextView hrRating;
 
-    //ScrollView animalWelfareScroll;
     LinearLayout animalWelfareSourceLayout;
     TextView awRating;
 
@@ -69,6 +66,11 @@ public class ProductOverview extends AppCompatActivity {
         init();
     }
 
+    /**Initializes the product description and sources on the overview. If the intent that launched
+     the activity (such as from the search activity included a title, a description, and/or sources,
+     then those items are placed in the overview. If any of those items are missing,
+     then the default dummy values are used instead.
+     */
     private void init() {
         Intent intent = getIntent();
         if(intent != null && intent.getStringExtra("description") != null) {
@@ -136,6 +138,10 @@ public class ProductOverview extends AppCompatActivity {
         calculateRatings();
     }
 
+    /** pulls sources information for the three demo categories (environment, human rights, and
+     * animal welfare from the intent that launched the overview activity. Then creates
+     * ProductSourceViews out of those product sources and adds them to the appropriate layouts
+     * in the overview*/
     private void initFromSources(HashMap map) {
         HashMap<String, ArrayList<ProductSourceView.ProductSource>> sources =
                 (HashMap<String, ArrayList<ProductSourceView.ProductSource>>)map;
@@ -177,6 +183,16 @@ public class ProductOverview extends AppCompatActivity {
         calculateRatings();
     }
 
+    /** creates a ProductSourceView out of the information entered by the user in the Add Source
+     * dialog
+     *
+     * @param title The title of the source, which will be displayed as the link text in the
+     *              source list
+     * @param path The url of the source
+     * @param good a boolean representing if the source is positive (true) or negative (false)
+     * @return a ProductSourceView created from the above parameters ready to be inserted into the
+     * overview screen
+     */
     private ProductSourceView createProductSource(String title, String path, boolean good) {
         if(title == null) {
             title = "Default Title";
@@ -196,6 +212,12 @@ public class ProductOverview extends AppCompatActivity {
         return psv;
     }
 
+    /** Creates an Add Source button and adds it to the appropriate source layout based on the
+     * category passed in.
+     *
+     * @param category String representing the name of the category that the Add Source button will
+     *                 be added to
+     */
     private Button createAddSourceButton(final String category) {
         Button add = new Button(this);
         add.setText("+ Add Source");
@@ -253,7 +275,12 @@ public class ProductOverview extends AppCompatActivity {
         return add;
     }
 
+    /**
+     * Calculates the ratings for each category and sets the appropriate color and text on them
+     */
     private void calculateRatings() {
+        /*using getChildCount() - 1 because all sourceLayouts include at least one child:
+        the Add Source button*/
         int environmentSourceCount = environmentSourceLayout.getChildCount() - 1;
         int i;
         int goodCount = 0;
@@ -292,6 +319,12 @@ public class ProductOverview extends AppCompatActivity {
         setRating(awRating, goodRatio);
     }
 
+    /**Sets the appropriate color and text on each category label based on its rating
+     *
+     * @param ratingView the textView representing the rating for a given category
+     * @param ratio the rating calculated. If the ratio passed is -1, then it indicates that the
+     *        rating should be "N/A"
+     */
     private void setRating (TextView ratingView, double ratio) {
         if(ratio == -1) {
             ratingView.setBackgroundResource(R.drawable.color_rating_none);

@@ -18,7 +18,9 @@ import android.widget.TextView;
 import java.io.Serializable;
 
 /**
- * TODO: document your custom view class.
+ * The view representing a product source in one of the SourceLayoutViews in the product overview.
+ * It contains a source title that is displayed as a link, an image representing whether the source
+ * is positive or negative, and a path representing where the url of the source
  */
 public class ProductSourceView extends LinearLayout {
     TextView sourceTitle;
@@ -73,6 +75,12 @@ public class ProductSourceView extends LinearLayout {
         sourcePath.setText("--" + path);
     }
 
+    /**
+     * Sets the attributes of the ProductSourceView based on the fields in the ProductSource that is
+     * passed in.
+     *
+     * @param source the ProductSource whose fields will be used to populate the ProductSourceView
+     * */
     public void setAttributes (final ProductSource source) {
         setSourceTitle(source.getTitle());
         setSourcePath(source.getSourceName());
@@ -98,6 +106,13 @@ public class ProductSourceView extends LinearLayout {
         return positive;
     }
 
+    /**
+     * A class that contains the fields that can be set on a ProductSourceView. This class allows
+     * for the fields of a Product Source to be created and defined before the actual
+     * ProductSourceView is inflated in the ProductOverview activity. For example, ProductSources
+     * can be declared in the search activity and then passed in as extras to be loaded by the
+     * ProductOverview activity.
+     * */
     public static class ProductSource implements Serializable{
         String title;
         String url;

@@ -71,6 +71,8 @@ public class SearchableActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                /*This line will filter the contents of the adapter based on the character sequence
+                * currently present in the editText at the top of the activity*/
                 mResultsAdapter.getFilter().filter(s);
             }
 
@@ -101,6 +103,14 @@ public class SearchableActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Retrieves a HashMap representing the sources associated with a product.
+     *
+     * @param productName the name of the product to retrieve sources for
+     * @return a HashMap representing the sources or null if there are no sources associated with
+     * the given product. The keys of the map are the category names "environment", "animalWelfare",
+     * "humanRights", etc.
+     * */
     public HashMap getSources(String productName) {
         switch(productName) {
             case "Starbucks Coffee":
